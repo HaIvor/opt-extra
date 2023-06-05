@@ -106,12 +106,6 @@ while i < max_iter:
 
             rho_ox2 = sigma_ox1 
 
-        if i%10 == 0:
-            sigma_ox1 = 0
-            sigma_ox2 = 0
-            rho_ox1 = 0
-            rho_ox2 = 0
-
         i += 1 
 
         # Should get values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z
