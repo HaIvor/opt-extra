@@ -94,6 +94,9 @@ out_neigh = 1
 # Value used in order to increase the basin of attraction and the robustness of the algorithm
 c = 1E-8
 
+# packet sannsyn (1/packetP) sjanse å mista pakke
+packetP = 2
+
 # bb multiplier (used in the barrier method)
 mu = 2
 
@@ -187,7 +190,7 @@ while i < max_iter:
     if flag_reception == 1:
 
         # Should get these values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z
-        if random.randint(0, 50) == 1:
+        if random.randint(0, packetP) == 1:
             print("------PACKET LOSS ON node i, iteration", i)
             pl_list = np.append(pl_list, i)
         else: 
@@ -277,7 +280,7 @@ while i < max_iter:
 
         # Should get values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z
 
-        if random.randint(0, 40) == 1:
+        if random.randint(0, packetP) == 1:
             print("------PACKET LOSS ON node j, iteration", i)
             pl_list = np.append(pl_list2, i)
         else: 
