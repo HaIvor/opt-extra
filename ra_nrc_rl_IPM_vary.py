@@ -114,7 +114,7 @@ epsilon = 0.00001
 bb = 5
 
 # Max iterations (if it never converges)
-max_iter = 280
+max_iter = 200
 
 # Note: The next steps heavily follows the given pseudocode in the bachelor report.
 
@@ -159,6 +159,9 @@ m_list = np.array(xi[2])
 N_list2 = np.array(xj[0])
 M_list2 = np.array(xj[1])
 m_list2 = np.array(xj[2])
+
+pl_list = np.array([])
+pl_list2 = np.array([])
 i = 1
 #---------------------------------------------------------------------------------------
 
@@ -183,15 +186,18 @@ while i < max_iter:
 
     if flag_reception == 1:
 
-        # Should get these values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z 
+        # Should get these values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z
+        if random.randint(0, 50) == 1:
+            print("------PACKET LOSS ON node i, iteration", i)
+            pl_list = np.append(pl_list, i)
+        else: 
+            yi = yi + np.float16(sigmaj_y) - rhoi_y
+            zi = zi + np.float16(sigmaj_z) - rhoi_z
 
-        yi = yi + np.float16(sigmaj_y) - rhoi_y
-        zi = zi + np.float16(sigmaj_z) - rhoi_z
+            rhoi_y = np.float16(sigmaj_y)
+            rhoi_z = np.float16(sigmaj_z)
 
-        rhoi_y = np.float16(sigmaj_y)
-        rhoi_z = np.float16(sigmaj_z)
-
-        flag_reception, flag_update, flag_transmission, flag_update2, flag_reception2, flag_transmission2 = 0, 0, 0, 0, 0, 0
+            flag_reception, flag_update, flag_transmission, flag_update2, flag_reception2, flag_transmission2 = 0, 0, 0, 0, 0, 0
         flag_update = 1
         
 
@@ -271,11 +277,15 @@ while i < max_iter:
 
         # Should get values from node j: transmitter_node_ID, sigmaj_y and sigmaj_z
 
-        yj = yj + np.float16(sigmai_y) - rhoj_y 
-        zj = zj + np.float16(sigmai_z) - rhoj_z
+        if random.randint(0, 40) == 1:
+            print("------PACKET LOSS ON node j, iteration", i)
+            pl_list = np.append(pl_list2, i)
+        else: 
+            yj = yj + np.float16(sigmai_y) - rhoj_y 
+            zj = zj + np.float16(sigmai_z) - rhoj_z
 
-        rhoj_y = np.float16(sigmai_y)
-        rhoj_z = np.float16(sigmai_z) 
+            rhoj_y = np.float16(sigmai_y)
+            rhoj_z = np.float16(sigmai_z) 
 
         flag_reception, flag_update, flag_transmission, flag_update2, flag_reception2, flag_transmission2 = 0, 0, 0, 0, 0, 0
         flag_update2 = 1
@@ -334,6 +344,9 @@ ax3.legend(loc="lower right")
 ax1.set_xlabel('Iterations')
 ax2.set_xlabel('Iterations')
 ax3.set_xlabel('Iterations')
+
+print("pl_list:", pl_list)
+print("pl_list2:", pl_list2)
 
 figure.suptitle('ra-NRC with two nodes - Forced sequence', fontsize=16)
 
