@@ -95,7 +95,7 @@ out_neigh = 1
 c = 1E-8
 
 # packet sannsyn (1/packetP) sjanse å mista pakke
-packetP = 2
+packetP = 40
 
 # bb multiplier (used in the barrier method)
 mu = 2
@@ -107,7 +107,7 @@ gamma = 20
 bb_max = 100
 
 # How exact one wants before the simulation stops. A lower tolerance value => more exact
-tolerance = 0.2
+tolerance = 0.5
 
 # We set a very low epsilon value first iteration to not get a big jump in the beginning
 epsilon = 0.00001
@@ -282,7 +282,7 @@ while i < max_iter:
 
         if random.randint(0, packetP) == 1:
             print("------PACKET LOSS ON node j, iteration", i)
-            pl_list = np.append(pl_list2, i)
+            pl_list2 = np.append(pl_list2, i)
         else: 
             yj = yj + np.float16(sigmai_y) - rhoj_y 
             zj = zj + np.float16(sigmai_z) - rhoj_z
